@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
+import { CircularGallery } from '@/components/sections/CircularGallery';
 import { AboutSection } from '@/components/sections/AboutSection';
 import { PortfolioSection } from '@/components/sections/PortfolioSection';
 import { ServicesSection } from '@/components/sections/ServicesSection';
@@ -12,6 +13,7 @@ const Index = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
+      <CircularGallery />
       <AboutSection />
       <PortfolioSection />
       <ServicesSection />
