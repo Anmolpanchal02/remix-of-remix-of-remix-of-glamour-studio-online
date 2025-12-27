@@ -3,56 +3,56 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const categories = ['All', 'Bridal', 'Editorial', 'Everyday', 'Special Events'];
+const categories = ['All', 'Bridal', 'Engagement', 'Reception', 'Party'];
 
 const portfolioItems = [
   {
     id: 1,
-    title: 'Elegant Bridal',
+    title: 'Traditional Bridal',
     category: 'Bridal',
     image: 'https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?q=80&w=1974&auto=format&fit=crop',
   },
   {
     id: 2,
-    title: 'Editorial Glam',
-    category: 'Editorial',
-    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1987&auto=format&fit=crop',
+    title: 'Engagement Glow',
+    category: 'Engagement',
+    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1987&auto=format&fit=crop',
   },
   {
     id: 3,
-    title: 'Natural Glow',
-    category: 'Everyday',
-    image: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?q=80&w=1935&auto=format&fit=crop',
+    title: 'Reception Glamour',
+    category: 'Reception',
+    image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=1780&auto=format&fit=crop',
   },
   {
     id: 4,
-    title: 'Red Carpet Ready',
-    category: 'Special Events',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop',
+    title: 'Party Ready',
+    category: 'Party',
+    image: 'https://images.unsplash.com/photo-1526666923127-b2970f64b422?q=80&w=2072&auto=format&fit=crop',
   },
   {
     id: 5,
-    title: 'Romantic Bridal',
+    title: 'South Indian Bride',
     category: 'Bridal',
     image: 'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?q=80&w=1974&auto=format&fit=crop',
   },
   {
     id: 6,
-    title: 'Bold Editorial',
-    category: 'Editorial',
-    image: 'https://images.unsplash.com/photo-1526666923127-b2970f64b422?q=80&w=2072&auto=format&fit=crop',
+    title: 'Minimalist Bride',
+    category: 'Bridal',
+    image: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?q=80&w=1935&auto=format&fit=crop',
   },
   {
     id: 7,
-    title: 'Fresh Day Look',
-    category: 'Everyday',
+    title: 'Cocktail Night',
+    category: 'Party',
     image: 'https://images.unsplash.com/photo-1583255448430-17c5eda08e5c?q=80&w=2070&auto=format&fit=crop',
   },
   {
     id: 8,
-    title: 'Gala Evening',
-    category: 'Special Events',
-    image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=1780&auto=format&fit=crop',
+    title: 'Sangeet Look',
+    category: 'Engagement',
+    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1987&auto=format&fit=crop',
   },
 ];
 
