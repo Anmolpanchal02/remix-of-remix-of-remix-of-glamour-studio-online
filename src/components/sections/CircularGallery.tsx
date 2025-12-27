@@ -12,25 +12,46 @@ const images = [
   'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=400&h=500&fit=crop',
 ];
 
+// Random starting positions for each image
+const startPositions = [
+  { x: -400, y: -300 },
+  { x: 400, y: -200 },
+  { x: -300, y: 300 },
+  { x: 300, y: 400 },
+  { x: -500, y: 0 },
+  { x: 500, y: 100 },
+  { x: 0, y: -400 },
+  { x: 0, y: 400 },
+];
+
 export function CircularGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.3 });
+  const isInView = useInView(containerRef, { once: false, amount: 0.4 });
+  const [hasAnimated, setHasAnimated] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   const totalImages = images.length;
   const angleStep = 360 / totalImages;
-  const radius = 300; // Distance from center
+  const radius = 280;
 
+  // Start rotation after images have assembled
   useEffect(() => {
-    if (!isInView || isPaused) return;
+    if (isInView && !hasAnimated) {
+      setTimeout(() => setHasAnimated(true), 1500);
+    }
+  }, [isInView, hasAnimated]);
+
+  // Continuous rotation
+  useEffect(() => {
+    if (!hasAnimated || isPaused) return;
 
     const interval = setInterval(() => {
       setRotation((prev) => prev + 0.3);
     }, 30);
 
     return () => clearInterval(interval);
-  }, [isInView, isPaused]);
+  }, [hasAnimated, isPaused]);
 
   return (
     <section
@@ -70,18 +91,49 @@ export function CircularGallery() {
           style={{
             transformStyle: 'preserve-3d',
             transform: `translateX(-50%) translateY(-50%) rotateY(${rotation}deg)`,
-            transition: isPaused ? 'transform 0.3s ease-out' : 'none',
           }}
         >
           {images.map((image, index) => {
             const angle = angleStep * index;
+            const startPos = startPositions[index];
+
             return (
-              <div
+              <motion.div
                 key={index}
                 className="absolute group cursor-pointer"
+                initial={{
+                  opacity: 0,
+                  x: startPos.x,
+                  y: startPos.y,
+                  rotateY: 0,
+                  z: 0,
+                  scale: 0.5,
+                }}
+                animate={
+                  isInView
+                    ? {
+                        opacity: 1,
+                        x: 0,
+                        y: 0,
+                        scale: 1,
+                      }
+                    : {
+                        opacity: 0,
+                        x: startPos.x,
+                        y: startPos.y,
+                        scale: 0.5,
+                      }
+                }
+                transition={{
+                  duration: 1,
+                  delay: index * 0.1,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
                 style={{
                   transformStyle: 'preserve-3d',
-                  transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
+                  transform: isInView
+                    ? `rotateY(${angle}deg) translateZ(${radius}px)`
+                    : 'none',
                   left: '-75px',
                   top: '-100px',
                 }}
@@ -90,21 +142,34 @@ export function CircularGallery() {
                   <img
                     src={image}
                     alt={`Gallery ${index + 1}`}
-                    className="w-[150px] h-[200px] md:w-[180px] md:h-[240px] object-cover"
+                    className="w-[140px] h-[180px] md:w-[160px] md:h-[220px] object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 border-2 border-primary/0 group-hover:border-primary/50 rounded-xl transition-all duration-300" />
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
       </div>
 
-      {/* Decorative line */}
-      <div className="absolute bottom-20 left-1/2 -translate-x-1/2">
-        <div className="w-px h-16 bg-gradient-to-b from-primary/50 to-transparent" />
-      </div>
+      {/* Scroll indicator */}
+      {!hasAnimated && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-muted-foreground text-sm flex flex-col items-center gap-2"
+          >
+            <span>Scroll to reveal</span>
+            <div className="w-px h-8 bg-gradient-to-b from-primary/50 to-transparent" />
+          </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 }
