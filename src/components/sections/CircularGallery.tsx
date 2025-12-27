@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const images = [
   'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=400&h=500&fit=crop',
@@ -14,150 +14,137 @@ const images = [
 
 // Random starting positions for each image
 const startPositions = [
-  { x: -400, y: -300 },
-  { x: 400, y: -200 },
-  { x: -300, y: 300 },
-  { x: 300, y: 400 },
-  { x: -500, y: 0 },
-  { x: 500, y: 100 },
-  { x: 0, y: -400 },
-  { x: 0, y: 400 },
+  { x: -500, y: -400 },
+  { x: 500, y: -300 },
+  { x: -400, y: 400 },
+  { x: 400, y: 500 },
+  { x: -600, y: 0 },
+  { x: 600, y: 100 },
+  { x: 0, y: -500 },
+  { x: 0, y: 500 },
 ];
 
 export function CircularGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.4 });
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const [rotation, setRotation] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  });
 
   const totalImages = images.length;
   const angleStep = 360 / totalImages;
-  const radius = 280;
+  const radius = 250;
 
-  // Start rotation after images have assembled
-  useEffect(() => {
-    if (isInView && !hasAnimated) {
-      setTimeout(() => setHasAnimated(true), 1500);
-    }
-  }, [isInView, hasAnimated]);
-
-  // Continuous rotation
-  useEffect(() => {
-    if (!hasAnimated || isPaused) return;
-
-    const interval = setInterval(() => {
-      setRotation((prev) => prev + 0.3);
-    }, 30);
-
-    return () => clearInterval(interval);
-  }, [hasAnimated, isPaused]);
+  // Rotation based on scroll (starts after images assemble)
+  const rotation = useTransform(scrollYProgress, [0.5, 1], [0, 360]);
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background py-20"
+      className="relative h-[200vh] bg-background"
     >
-      {/* Background glow */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-[800px] h-[800px] rounded-full bg-primary/5 blur-3xl" />
-      </div>
-
-      {/* Section title */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-center z-10 mb-16"
-      >
-        <h2 className="font-heading text-4xl md:text-5xl text-foreground mb-4">
-          Our <span className="text-primary">Artistry</span>
-        </h2>
-        <p className="text-muted-foreground max-w-md mx-auto">
-          Beautiful transformations crafted with love
-        </p>
-      </motion.div>
-
-      {/* 3D Carousel */}
-      <div
-        className="relative w-full h-[400px] md:h-[500px]"
-        style={{ perspective: '1000px' }}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        <div
-          className="absolute left-1/2 top-1/2 w-0 h-0"
-          style={{
-            transformStyle: 'preserve-3d',
-            transform: `translateX(-50%) translateY(-50%) rotateY(${rotation}deg)`,
-          }}
-        >
-          {images.map((image, index) => {
-            const angle = angleStep * index;
-            const startPos = startPositions[index];
-
-            return (
-              <motion.div
-                key={index}
-                className="absolute group cursor-pointer"
-                initial={{
-                  opacity: 0,
-                  x: startPos.x,
-                  y: startPos.y,
-                  rotateY: 0,
-                  z: 0,
-                  scale: 0.5,
-                }}
-                animate={
-                  isInView
-                    ? {
-                        opacity: 1,
-                        x: 0,
-                        y: 0,
-                        scale: 1,
-                      }
-                    : {
-                        opacity: 0,
-                        x: startPos.x,
-                        y: startPos.y,
-                        scale: 0.5,
-                      }
-                }
-                transition={{
-                  duration: 1,
-                  delay: index * 0.1,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                }}
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: isInView
-                    ? `rotateY(${angle}deg) translateZ(${radius}px)`
-                    : 'none',
-                  left: '-75px',
-                  top: '-100px',
-                }}
-              >
-                <div className="relative overflow-hidden rounded-xl shadow-2xl transition-all duration-300 group-hover:scale-105">
-                  <img
-                    src={image}
-                    alt={`Gallery ${index + 1}`}
-                    className="w-[140px] h-[180px] md:w-[160px] md:h-[220px] object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-0 border-2 border-primary/0 group-hover:border-primary/50 rounded-xl transition-all duration-300" />
-                </div>
-              </motion.div>
-            );
-          })}
+      {/* Sticky container */}
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
+        {/* Background glow */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-[800px] h-[800px] rounded-full bg-primary/5 blur-3xl" />
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      {!hasAnimated && (
+        {/* Section title */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          style={{
+            opacity: useTransform(scrollYProgress, [0, 0.15], [0, 1]),
+            y: useTransform(scrollYProgress, [0, 0.15], [50, 0]),
+          }}
+          className="text-center z-10 mb-16"
+        >
+          <h2 className="font-heading text-4xl md:text-5xl text-foreground mb-4">
+            Our <span className="text-primary">Artistry</span>
+          </h2>
+          <p className="text-muted-foreground max-w-md mx-auto">
+            Beautiful transformations crafted with love
+          </p>
+        </motion.div>
+
+        {/* 3D Carousel */}
+        <div
+          className="relative w-full h-[400px] md:h-[450px]"
+          style={{ perspective: '1000px' }}
+        >
+          <motion.div
+            className="absolute left-1/2 top-1/2 w-0 h-0"
+            style={{
+              transformStyle: 'preserve-3d',
+              rotateY: rotation,
+              x: '-50%',
+              y: '-50%',
+            }}
+          >
+            {images.map((image, index) => {
+              const angle = angleStep * index;
+              const startPos = startPositions[index];
+              
+              // Each image appears at different scroll points
+              const imageStart = 0.1 + (index * 0.04);
+              const imageEnd = imageStart + 0.15;
+
+              const imageX = useTransform(
+                scrollYProgress,
+                [imageStart, imageEnd],
+                [startPos.x, 0]
+              );
+              const imageY = useTransform(
+                scrollYProgress,
+                [imageStart, imageEnd],
+                [startPos.y, 0]
+              );
+              const imageOpacity = useTransform(
+                scrollYProgress,
+                [imageStart, imageStart + 0.05, imageEnd],
+                [0, 0.5, 1]
+              );
+              const imageScale = useTransform(
+                scrollYProgress,
+                [imageStart, imageEnd],
+                [0.3, 1]
+              );
+
+              return (
+                <motion.div
+                  key={index}
+                  className="absolute group cursor-pointer"
+                  style={{
+                    transformStyle: 'preserve-3d',
+                    x: imageX,
+                    y: imageY,
+                    opacity: imageOpacity,
+                    scale: imageScale,
+                    rotateY: angle,
+                    translateZ: radius,
+                    left: '-70px',
+                    top: '-90px',
+                  }}
+                >
+                  <div className="relative overflow-hidden rounded-xl shadow-2xl">
+                    <img
+                      src={image}
+                      alt={`Gallery ${index + 1}`}
+                      className="w-[130px] h-[170px] md:w-[150px] md:h-[200px] object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                    <div className="absolute inset-0 border-2 border-primary/20 rounded-xl" />
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          style={{
+            opacity: useTransform(scrollYProgress, [0, 0.1, 0.4], [1, 1, 0]),
+          }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2"
         >
           <motion.div
@@ -169,7 +156,7 @@ export function CircularGallery() {
             <div className="w-px h-8 bg-gradient-to-b from-primary/50 to-transparent" />
           </motion.div>
         </motion.div>
-      )}
+      </div>
     </section>
   );
 }
