@@ -1,61 +1,61 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Check, Crown, Sparkles, Star } from 'lucide-react';
+import { Check, Crown, Sparkles, Star, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const services = [
   {
     icon: Crown,
     name: 'Bridal Makeup',
-    description: 'Complete bridal beauty package including trial, day-of application, and touch-up kit.',
-    price: 'From $350',
-    duration: '2-3 hours',
+    description: 'Complete bridal package with HD/Airbrush makeup, hairstyling, and draping assistance for your big day.',
+    price: '₹15,000 onwards',
+    duration: '3-4 hours',
     features: [
-      'Pre-wedding consultation & trial',
-      'Day-of application',
-      'Long-lasting premium products',
-      'Touch-up kit included',
-      'False lashes application',
+      'Pre-bridal consultation',
+      'HD/Airbrush makeup',
+      'Hairstyling included',
+      'Saree/Lehenga draping',
+      'Touch-up kit',
+      'False lashes',
     ],
     featured: true,
   },
   {
     icon: Sparkles,
-    name: 'Special Events',
-    description: 'Perfect for galas, photoshoots, proms, and any occasion where you want to shine.',
-    price: 'From $150',
-    duration: '1-1.5 hours',
+    name: 'Engagement Makeup',
+    description: 'Stunning engagement look to make you shine on your special day with long-lasting premium products.',
+    price: '₹8,000 onwards',
+    duration: '2-3 hours',
     features: [
       'Personalized consultation',
-      'Event-appropriate styling',
-      'Long-wear formulas',
-      'False lashes included',
-      'Lip touch-up provided',
+      'Long-lasting makeup',
+      'Hairstyling included',
+      'False lashes',
+      'Touch-up provided',
     ],
     featured: false,
   },
   {
     icon: Star,
-    name: 'Editorial & Fashion',
-    description: 'Creative and avant-garde looks for magazines, campaigns, and runway shows.',
-    price: 'From $250',
-    duration: '2+ hours',
+    name: 'Party Makeup',
+    description: 'Glamorous party look perfect for weddings, receptions, sangeet and special occasions.',
+    price: '₹4,000 onwards',
+    duration: '1.5-2 hours',
     features: [
-      'Concept development',
-      'Creative direction collaboration',
-      'High-definition techniques',
-      'On-set touch-ups',
-      'Multiple look changes',
+      'Customized look',
+      'Premium products',
+      'False lashes',
+      'Setting spray',
     ],
     featured: false,
   },
 ];
 
 const addOns = [
-  { name: 'Bridal Party (per person)', price: '$120' },
-  { name: 'Hair Styling', price: '$100' },
-  { name: 'Travel Fee (outside city)', price: '$50+' },
-  { name: 'Airbrush Application', price: '+$50' },
+  { name: 'Reception Makeup', price: '₹10,000' },
+  { name: 'Hair Styling Only', price: '₹2,000' },
+  { name: 'Travel (Outside City)', price: '₹1,500+' },
+  { name: 'Pre-Bridal Packages', price: 'On Request' },
 ];
 
 export function ServicesSection() {

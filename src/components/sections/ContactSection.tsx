@@ -20,25 +20,25 @@ const contactInfo = [
   {
     icon: Phone,
     label: 'Phone',
-    value: '+1 (555) 123-4567',
-    href: 'tel:+15551234567',
+    value: '+91 99999 99999',
+    href: 'tel:+919999999999',
   },
   {
     icon: Mail,
     label: 'Email',
-    value: 'hello@glamstudio.com',
-    href: 'mailto:hello@glamstudio.com',
+    value: 'makeoveranushka@gmail.com',
+    href: 'mailto:makeoveranushka@gmail.com',
   },
   {
     icon: MapPin,
     label: 'Location',
-    value: 'Los Angeles, CA',
+    value: 'Delhi NCR, India',
     href: '#',
   },
   {
     icon: Clock,
     label: 'Hours',
-    value: 'Mon-Sat: 9AM - 7PM',
+    value: 'Mon-Sun: 9AM - 8PM',
     href: '#',
   },
 ];
@@ -47,13 +47,13 @@ const socialLinks = [
   {
     icon: Instagram,
     label: 'Instagram',
-    href: 'https://instagram.com',
+    href: 'https://instagram.com/makeoveranushka',
     color: 'hover:text-pink-500',
   },
   {
     icon: MessageCircle,
     label: 'WhatsApp',
-    href: 'https://wa.me/15551234567',
+    href: 'https://wa.me/919999999999',
     color: 'hover:text-green-500',
   },
 ];
