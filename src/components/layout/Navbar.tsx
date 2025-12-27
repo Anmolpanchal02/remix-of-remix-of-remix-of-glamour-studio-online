@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Instagram, Phone, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const navLinks = [
   { name: 'Home', href: '#home' },
@@ -98,6 +99,7 @@ export function Navbar() {
               >
                 <MessageCircle className="w-5 h-5" />
               </motion.a>
+              <ThemeToggle />
               <Button
                 onClick={() => scrollToSection('#contact')}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
