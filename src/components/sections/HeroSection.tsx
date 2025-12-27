@@ -60,9 +60,9 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
           className="font-heading text-5xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-6 leading-tight"
         >
-          Unveil Your
+          Makeover by
           <br />
-          <span className="text-gradient-gold">True Beauty</span>
+          <span className="text-gradient-gold">Anushka</span>
         </motion.h1>
 
         <motion.p
@@ -71,8 +71,8 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 font-light"
         >
-          Luxury makeup artistry for your most memorable moments. From bridal elegance
-          to editorial glamour, experience the transformation you deserve.
+          Professional makeup artist for bridal, engagement, party & editorial looks.
+          Let me enhance your natural beauty for your special moments.
         </motion.p>
 
         <motion.div

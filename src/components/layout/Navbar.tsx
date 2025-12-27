@@ -56,8 +56,8 @@ export function Navbar() {
               className="font-heading text-2xl md:text-3xl font-semibold text-foreground tracking-wide"
               whileHover={{ scale: 1.02 }}
             >
-              <span className="text-primary">Glam</span>
-              <span className="text-foreground">Studio</span>
+              <span className="text-foreground">Makeover by </span>
+              <span className="text-primary">Anushka</span>
             </motion.a>
 
             {/* Desktop Navigation */}

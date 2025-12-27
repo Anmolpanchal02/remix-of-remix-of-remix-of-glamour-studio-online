@@ -11,9 +11,9 @@ const footerLinks = [
 ];
 
 const socialLinks = [
-  { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
-  { icon: MessageCircle, href: 'https://wa.me/15551234567', label: 'WhatsApp' },
-  { icon: Mail, href: 'mailto:hello@glamstudio.com', label: 'Email' },
+  { icon: Instagram, href: 'https://instagram.com/makeoveranushka', label: 'Instagram' },
+  { icon: MessageCircle, href: 'https://wa.me/919999999999', label: 'WhatsApp' },
+  { icon: Mail, href: 'mailto:makeoveranushka@gmail.com', label: 'Email' },
 ];
 
 export function Footer() {
@@ -38,12 +38,12 @@ export function Footer() {
               }}
               className="font-heading text-2xl font-semibold text-foreground tracking-wide inline-block mb-4"
             >
-              <span className="text-primary">Glam</span>
-              <span className="text-foreground">Studio</span>
+              <span className="text-foreground">Makeover by </span>
+              <span className="text-primary">Anushka</span>
             </a>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Luxury makeup artistry for your most memorable moments. Elevating beauty
-              with precision, passion, and personalized care.
+              Professional makeup artist specializing in bridal, party, and editorial looks.
+              Transforming your beauty dreams into reality.
             </p>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
